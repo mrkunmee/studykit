@@ -6,3 +6,6 @@ Thumbs.db
 # Local tooling (none required to build this static site)
 node_modules/
 .vercel/
+
+# Internal docs/specs kept out of the repo
+docs/
