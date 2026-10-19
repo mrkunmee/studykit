@@ -1,0 +1,4 @@
+# Keep internal docs/specs and dev notes out of the public deployment
+docs/
+README.md
+.DS_Store

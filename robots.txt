@@ -1,0 +1,7 @@
+# StudentKit Nigeria — robots.txt
+# Public site: allow all crawlers. No private areas exist.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://studykit.com.ng/sitemap.xml

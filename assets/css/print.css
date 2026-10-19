@@ -1,0 +1,64 @@
+/* ==========================================================================
+   StudentKit Nigeria — Print stylesheet (docs/06-pages-system.md, Page 20)
+   Goal: when a user prints a tool result, show a clean result/timetable only —
+   no header, footer, nav, forms, buttons, ads or decoration. No PDF export.
+   Guides/legal pages print their article content normally.
+   ========================================================================== */
+
+/* Hidden on screen; only rendered on paper */
+.print-only, .print-header { display: none; }
+
+@media print {
+  body { background: #fff; color: #000; font-size: 12pt; }
+
+  /* Remove site chrome and interactive/decorative elements from any printout */
+  .site-header,
+  .site-footer,
+  .breadcrumb,
+  .skip-link,
+  .nav-desktop,
+  .nav-mobile,
+  .nav-toggle,
+  .ad-slot,
+  .btn,
+  .btn-row,
+  .icon-btn,
+  .segmented,
+  form,
+  .page-intro,
+  .no-print,
+  .related,
+  .faq,
+  .notice,
+  .empty-state,
+  .toc,
+  .cta-band {
+    display: none !important;
+  }
+
+  main, .section, .container { padding: 0 !important; margin: 0 !important; }
+
+  /* Reveal the designated print region cleanly */
+  .print-only { display: block !important; }
+  [data-print-region] {
+    display: block !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+  .print-header { display: block !important; margin-bottom: 12pt; }
+  .print-header .print-title { font-size: 18pt; font-weight: 700; margin: 0 0 4pt; color: #000 !important; }
+  .print-header .print-date { font-size: 10pt; color: #333 !important; }
+
+  /* Clean result typography */
+  .result-panel { border: 1px solid #000 !important; padding: 12pt !important; }
+  .tile { border: 1px solid #999 !important; background: #fff !important; }
+  .tile__value { color: #000 !important; }
+  h1, h2, h3 { color: #000 !important; }
+  a { color: #000 !important; text-decoration: none !important; }
+
+  /* Keep logical blocks together across page breaks */
+  .tile, tr, .timetable-day, .entry-row { break-inside: avoid; }
+  table.data th, table.data td { border-color: #999 !important; }
+  .data-table-wrap { overflow: visible !important; }
+}

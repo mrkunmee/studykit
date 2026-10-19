@@ -1,0 +1,8 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# Local tooling (none required to build this static site)
+node_modules/
+.vercel/

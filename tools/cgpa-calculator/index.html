@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CGPA Calculator — StudentKit Nigeria</title>
+  <meta name="description" content="Free CGPA calculator for Nigerian students. Add your courses, credit units and grades on a 5.0 or 4.0 scale to work out your semester GPA and cumulative CGPA.">
+  <meta name="theme-color" content="#0F6E5C">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="StudentKit Nigeria">
+  <meta property="og:title" content="CGPA Calculator — StudentKit Nigeria">
+  <meta property="og:description" content="Work out your semester GPA and cumulative CGPA on the grading scale that matches your school.">
+  <meta property="og:url" content="https://studykit.com.ng/tools/cgpa-calculator">
+  <link rel="canonical" href="https://studykit.com.ng/tools/cgpa-calculator">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/print.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header id="site-header"><noscript><div class="container" style="padding-block:12px"><a class="brand" href="/"><strong>StudentKit Nigeria</strong></a> · <a href="/tools">Tools</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/contact">Contact</a></div></noscript></header>
+
+  <main id="main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/tools">Tools</a> / <span aria-current="page">CGPA Calculator</span></nav>
+    </div>
+
+    <section class="section" style="padding-top:var(--space-4)">
+      <div class="container">
+        <div class="page-intro">
+          <h1>CGPA Calculator</h1>
+          <p class="lead">Calculate your GPA for one semester, or your cumulative CGPA across semesters.
+            Choose the grading scale that matches your school — grade points differ between institutions,
+            so confirm your school's official scale.</p>
+        </div>
+
+        <noscript>
+          <div class="notice notice--warning" style="margin-top:var(--space-5)">
+            <svg viewBox="0 0 24 24" aria-hidden="true" stroke-width="1.75"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg>
+            <div><h3>JavaScript is required</h3><p>This calculator runs in your browser and needs JavaScript enabled. The method is explained in full below, and in our <a href="/guides/how-cgpa-is-calculated">CGPA guide</a>.</p></div>
+          </div>
+        </noscript>
+
+        <div style="display:grid;gap:var(--space-6);margin-top:var(--space-6)">
+          <!-- CALCULATOR -->
+          <form id="cgpaForm" novalidate>
+            <!-- Scale setup -->
+            <div class="card">
+              <div class="field">
+                <label for="scale">Grading scale <span class="req" aria-hidden="true">*</span></label>
+                <select id="scale" name="scale" aria-describedby="scaleExplain">
+                  <option value="5">5.0 scale (A=5, B=4, C=3, D=2, E=1, F=0)</option>
+                  <option value="4">4.0 scale (A=4, B=3, C=2, D=1, F=0)</option>
+                </select>
+                <p class="help" id="scaleExplain"></p>
+              </div>
+            </div>
+
+            <!-- Course entry -->
+            <fieldset style="margin-top:var(--space-5)">
+              <legend>Your courses</legend>
+              <ul class="row-list" id="courseList"></ul>
+              <button type="button" class="btn btn--tertiary" id="addCourse">+ Add course</button>
+              <p class="field-error" id="courseSummaryError" role="alert"></p>
+            </fieldset>
+
+            <!-- Cumulative mode -->
+            <div class="card" style="margin-top:var(--space-5)">
+              <div class="field">
+                <span class="field-label" id="modeLabel">What do you want to calculate?</span>
+                <div class="segmented" role="radiogroup" aria-labelledby="modeLabel">
+                  <button type="button" id="modeSemester" role="radio" aria-checked="true" class="is-active">Semester GPA only</button>
+                  <button type="button" id="modeCumulative" role="radio" aria-checked="false">Include previous record</button>
+                </div>
+              </div>
+              <div id="cumulativeFields" hidden>
+                <div class="entry-row__grid" style="grid-template-columns:1fr 1fr">
+                  <div class="field">
+                    <label for="prevUnits">Previous cumulative credit units <span class="req" aria-hidden="true">*</span></label>
+                    <input type="number" id="prevUnits" inputmode="numeric" min="0" step="1" aria-describedby="prevUnitsHelp prevUnitsErr">
+                    <p class="help" id="prevUnitsHelp">Total units you have already completed.</p>
+                    <p class="field-error" id="prevUnitsErr"></p>
+                  </div>
+                  <div class="field">
+                    <label for="prevCGPA">Previous CGPA <span class="req" aria-hidden="true">*</span></label>
+                    <input type="number" id="prevCGPA" inputmode="decimal" min="0" step="0.01" aria-describedby="prevCGPAHelp prevCGPAErr">
+                    <p class="help" id="prevCGPAHelp">From your most recent result.</p>
+                    <p class="field-error" id="prevCGPAErr"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="btn-row" style="margin-top:var(--space-5)">
+              <button type="submit" class="btn btn--primary" id="calcBtn">Calculate</button>
+              <button type="button" class="btn btn--secondary" id="resetBtn">Reset</button>
+              <button type="button" class="btn btn--text" id="clearSavedBtn" hidden>Clear saved data</button>
+            </div>
+            <p class="help" id="saveNote" hidden>Saved on this device only. Nothing is sent anywhere.</p>
+          </form>
+
+          <!-- Results -->
+          <div id="liveRegion" class="visually-hidden" aria-live="polite"></div>
+          <div class="result-panel" id="result" hidden data-print-region>
+            <div class="print-header">
+              <p class="print-title">StudentKit — CGPA Result</p>
+              <p class="print-date" id="printDate"></p>
+            </div>
+            <h2 class="mt-0">Your result</h2>
+            <div class="tiles" id="resultTiles"></div>
+            <div class="data-table-wrap">
+              <table class="data" id="breakdownTable"></table>
+            </div>
+            <p class="text-muted" id="resultExplain" style="margin-top:var(--space-3)"></p>
+            <div class="btn-row no-print" style="margin-top:var(--space-4)">
+              <button type="button" class="btn btn--secondary" id="printBtn">Print result</button>
+              <button type="button" class="btn btn--text" id="recalcBtn">Edit inputs</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Worked example -->
+        <div class="article no-print" style="margin-top:var(--space-8)">
+          <h2>How CGPA is calculated (worked example)</h2>
+          <p>GPA weights each course by its credit units:</p>
+          <div class="formula"><code>GPA = Σ(grade point × credit units) ÷ Σ(credit units)</code></div>
+          <div class="example-block">
+            <p class="label">Example — 5.0 scale</p>
+            <p>Semester courses: A (3 units), B (2 units), C (4 units), A (1 unit).</p>
+            <p>Quality points = (5×3) + (4×2) + (3×4) + (5×1) = 15 + 8 + 12 + 5 = <strong>40</strong>.<br>
+               Credit units = 3 + 2 + 4 + 1 = <strong>10</strong>.<br>
+               <strong>Semester GPA = 40 ÷ 10 = 4.00</strong>.</p>
+            <p>Cumulative: previous 40 units at CGPA 3.50 → previous quality points = 3.50 × 40 = 140.
+               Add this semester (40 points over 10 units): total 180 points over 50 units.
+               <strong>CGPA = 180 ÷ 50 = 3.60</strong>.</p>
+          </div>
+          <div class="notice notice--warning">
+            <svg viewBox="0 0 24 24" aria-hidden="true" stroke-width="1.75"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg>
+            <div><h3>Confirm your institution's rules</h3><p>Grade points and rules differ between Nigerian
+              institutions and can change. This tool follows the scale you selected above — always confirm your
+              school's official grading policy.</p></div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="article faq" style="margin-top:var(--space-6)">
+          <h2>Frequently asked questions</h2>
+          <details><summary>What's the difference between GPA and CGPA?</summary><p>GPA is for a single semester. CGPA is cumulative — it combines all your completed semesters. Use "Include previous record" above to work out a cumulative figure.</p></details>
+          <details><summary>My school uses different grade points — can I still use this?</summary><p>Yes. Pick the scale that matches your school (5.0 or 4.0). If your school's exact points differ, confirm them in your student handbook before relying on the result.</p></details>
+          <details><summary>Do you store my results?</summary><p>Everything is calculated in your browser. If you choose to, your entries can be saved on your own device only (local storage) so they are there next time — use "Clear saved data" to remove them. Nothing is sent to a server.</p></details>
+          <details><summary>Why is my CGPA different from what I expected?</summary><p>Common causes are mixing up grade scales, forgetting to weight by credit units, or entering the wrong previous totals. Check each course's units and grade, and your previous CGPA and units.</p></details>
+        </div>
+
+        <!-- Related -->
+        <div class="related">
+          <h2>Related</h2>
+          <ul>
+            <li><a href="/guides/how-cgpa-is-calculated">Guide: How CGPA is calculated</a></li>
+            <li><a href="/tools/exam-score-planner">Exam Score Planner</a></li>
+            <li><a href="/tools/percentage-calculator">Percentage Calculator</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"><noscript><div class="container" style="padding-block:16px"><a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy-policy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/disclaimer">Disclaimer</a></div></noscript></footer>
+  <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/cgpa.js" defer></script>
+</body>
+</html>

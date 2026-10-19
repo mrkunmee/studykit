@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exam Score Planner — StudentKit Nigeria</title>
+  <meta name="description" content="Work out the exam or assessment mark you need to reach a target overall score. Enter your component weights and current marks. Planning maths, not a prediction.">
+  <meta name="theme-color" content="#0F6E5C">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="StudentKit Nigeria">
+  <meta property="og:title" content="Exam Score Planner — StudentKit Nigeria">
+  <meta property="og:description" content="See the score you need on your remaining assessments to reach an overall target.">
+  <meta property="og:url" content="https://studykit.com.ng/tools/exam-score-planner">
+  <link rel="canonical" href="https://studykit.com.ng/tools/exam-score-planner">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/print.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header id="site-header"><noscript><div class="container" style="padding-block:12px"><a class="brand" href="/"><strong>StudentKit Nigeria</strong></a> · <a href="/tools">Tools</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/contact">Contact</a></div></noscript></header>
+
+  <main id="main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/tools">Tools</a> / <span aria-current="page">Exam Score Planner</span></nav>
+    </div>
+
+    <section class="section" style="padding-top:var(--space-4)">
+      <div class="container">
+        <div class="page-intro">
+          <h1>Exam Score Planner</h1>
+          <p class="lead">See the score you'd need on your remaining assessments to reach a target — based only on
+            the weights and marks you enter. It can't predict your real result; grading and weighting depend on
+            your course.</p>
+        </div>
+
+        <div class="notice notice--info" style="margin-top:var(--space-5)">
+          <svg viewBox="0 0 24 24" aria-hidden="true" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><path d="M12 8v.5M11 12h1v4h1"/></svg>
+          <div>
+            <h3>How this is calculated</h3>
+            <p class="mb-0">Your course is made of assessment components, each with a <strong>weight (%)</strong>;
+              the weights should add up to 100%. For each component you enter the <strong>mark achieved (as a % of
+              that component)</strong>, or leave it blank if you haven't taken it yet. The planner then works out
+              the average mark needed on the remaining components to reach your <strong>target overall %</strong>.
+              This is arithmetic, not an institutional marking system.</p>
+          </div>
+        </div>
+
+        <noscript><div class="notice notice--warning"><svg viewBox="0 0 24 24" aria-hidden="true" stroke-width="1.75"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><div><h3>JavaScript is required</h3><p>This planner runs in your browser and needs JavaScript enabled.</p></div></div></noscript>
+
+        <form id="examForm" novalidate style="margin-top:var(--space-6)">
+          <fieldset>
+            <legend>Assessment components</legend>
+            <ul class="row-list" id="componentList"></ul>
+            <button type="button" class="btn btn--tertiary" id="addComponent">+ Add component</button>
+            <p class="field-error" id="weightSumNote"></p>
+          </fieldset>
+
+          <div class="card" style="margin-top:var(--space-5);max-width:320px">
+            <div class="field" style="margin-bottom:0">
+              <label for="target">Target overall % <span class="req" aria-hidden="true">*</span></label>
+              <input type="number" id="target" inputmode="decimal" min="0" max="100" step="0.1" aria-describedby="targetErr">
+              <p class="field-error" id="targetErr"></p>
+            </div>
+          </div>
+
+          <div class="btn-row" style="margin-top:var(--space-5)">
+            <button type="submit" class="btn btn--primary">Calculate</button>
+            <button type="button" class="btn btn--secondary" id="resetBtn">Reset</button>
+          </div>
+        </form>
+
+        <div id="liveRegion" class="visually-hidden" aria-live="polite"></div>
+        <div class="result-panel" id="result" hidden style="margin-top:var(--space-6)">
+          <h2 class="mt-0">Result</h2>
+          <div class="tiles" id="resultTiles"></div>
+          <p id="plainLanguage" style="font-weight:600"></p>
+          <div id="resultNotice"></div>
+          <p class="text-muted text-small">Actual grading, weighting, rounding and exam outcomes depend on your
+            institution's rules. Treat this as planning maths, not a guaranteed result.</p>
+        </div>
+
+        <!-- Worked example -->
+        <div class="article" style="margin-top:var(--space-8)">
+          <h2>Worked example</h2>
+          <div class="example-block">
+            <p class="label">Example</p>
+            <p>Components: Continuous assessment weight 30% with a mark of 80%; Exam weight 70%, not yet taken.
+              Target overall 50%.</p>
+            <p>Current weighted total = 30% × 80% = 0.30 × 0.80 = <strong>24%</strong>. Remaining weight = 70%.<br>
+               Required on the exam = (50% − 24%) ÷ 70% = 26 ÷ 70 ≈ <strong>37.1%</strong>. That is achievable because it is below 100%.</p>
+          </div>
+        </div>
+
+        <div class="article faq" style="margin-top:var(--space-6)">
+          <h2>Frequently asked questions</h2>
+          <details><summary>What if my weights don't add up to 100%?</summary><p>The planner will warn you and show the current total. Adjust your component weights so they sum to 100% for a meaningful result.</p></details>
+          <details><summary>What does "not achievable" mean?</summary><p>It means even a perfect score (100%) on your remaining components would not reach your target. The result shows the highest overall score still possible.</p></details>
+          <details><summary>Is this my predicted result?</summary><p>No. It is the mark you would need, assuming the weights and marks you entered. Your real result depends on your institution's actual rules.</p></details>
+        </div>
+
+        <div class="related">
+          <h2>Related</h2>
+          <ul>
+            <li><a href="/tools/cgpa-calculator">CGPA Calculator</a></li>
+            <li><a href="/tools/percentage-calculator">Percentage Calculator</a></li>
+            <li><a href="/guides/how-cgpa-is-calculated">Guide: How CGPA is calculated</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"><noscript><div class="container" style="padding-block:16px"><a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy-policy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/disclaimer">Disclaimer</a></div></noscript></footer>
+  <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/exam.js" defer></script>
+</body>
+</html>

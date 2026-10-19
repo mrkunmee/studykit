@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Practice Quiz — StudentKit Nigeria</title>
+  <meta name="description" content="Free practice quizzes with original questions for Nigerian students in Mathematics, English and Physics. Answer, submit, and review every mistake with explanations.">
+  <meta name="theme-color" content="#0F6E5C">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="StudentKit Nigeria">
+  <meta property="og:title" content="Practice Quiz — StudentKit Nigeria">
+  <meta property="og:description" content="Practise with original questions and learn from every answer. Not affiliated with any examination body.">
+  <meta property="og:url" content="https://studykit.com.ng/tools/practice-quiz">
+  <link rel="canonical" href="https://studykit.com.ng/tools/practice-quiz">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/print.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header id="site-header"><noscript><div class="container" style="padding-block:12px"><a class="brand" href="/"><strong>StudentKit Nigeria</strong></a> · <a href="/tools">Tools</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/contact">Contact</a></div></noscript></header>
+
+  <main id="main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/tools">Tools</a> / <span aria-current="page">Practice Quiz</span></nav>
+    </div>
+
+    <section class="section" style="padding-top:var(--space-4)">
+      <div class="container">
+        <div class="page-intro">
+          <h1>Practice Quiz</h1>
+          <p class="lead">Practise with short, original quizzes and learn from every answer. Choose a subject and
+            length, then review the questions you missed with explanations.</p>
+        </div>
+
+        <noscript><div class="notice notice--warning" style="margin-top:var(--space-5)"><svg viewBox="0 0 24 24" aria-hidden="true" stroke-width="1.75"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><div><h3>JavaScript is required</h3><p>The quiz runs in your browser and needs JavaScript enabled.</p></div></div></noscript>
+
+        <div id="liveRegion" class="visually-hidden" aria-live="polite"></div>
+
+        <!-- SETUP -->
+        <section id="quizSetup" class="card" style="margin-top:var(--space-6)" aria-label="Quiz setup">
+          <h2 class="mt-0">Set up your quiz</h2>
+          <div class="entry-row__grid" style="grid-template-columns:1fr 1fr">
+            <div class="field" style="margin-bottom:0">
+              <label for="subjectSel">Subject</label>
+              <select id="subjectSel"></select>
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label for="topicSel">Topic</label>
+              <select id="topicSel"></select>
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label for="difficultySel">Difficulty</label>
+              <select id="difficultySel"></select>
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label for="countSel">Number of questions</label>
+              <select id="countSel"></select>
+            </div>
+          </div>
+          <p class="help" id="availNote" style="margin-top:var(--space-3)"></p>
+          <div class="btn-row" style="margin-top:var(--space-4)">
+            <button type="button" class="btn btn--primary" id="startBtn">Start quiz</button>
+          </div>
+        </section>
+
+        <!-- PLAY -->
+        <section id="quizPlay" class="card" hidden aria-label="Quiz in progress" style="margin-top:var(--space-6)">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);flex-wrap:wrap">
+            <p class="mb-0 text-muted" id="progressText"></p>
+            <p class="mb-0 text-small" id="answeredText"></p>
+          </div>
+          <div style="height:6px;background:var(--color-bg-raised);border-radius:4px;margin:var(--space-3) 0">
+            <div id="progressBar" style="height:100%;width:0;background:var(--color-primary);border-radius:4px"></div>
+          </div>
+          <h2 id="questionText" style="margin-top:var(--space-4)"></h2>
+          <div id="optionList" role="radiogroup" aria-label="Answer choices" style="display:grid;gap:var(--space-2);margin-top:var(--space-3)"></div>
+          <div class="btn-row" style="margin-top:var(--space-5);justify-content:space-between">
+            <button type="button" class="btn btn--secondary" id="prevBtn">Previous</button>
+            <button type="button" class="btn btn--primary" id="nextBtn">Next</button>
+            <button type="button" class="btn btn--primary" id="submitBtn" hidden>Submit quiz</button>
+          </div>
+        </section>
+
+        <!-- RESULTS -->
+        <section id="quizResults" class="result-panel" hidden aria-label="Quiz results" style="margin-top:var(--space-6)">
+          <h2 class="mt-0">Your results</h2>
+          <div class="tiles" id="scoreTiles"></div>
+          <div class="btn-row" style="margin-bottom:var(--space-4)">
+            <button type="button" class="btn btn--secondary" id="retryBtn">Retry same quiz</button>
+            <button type="button" class="btn btn--tertiary" id="newQuizBtn">New quiz</button>
+            <label class="checkbox-item" style="margin-left:auto">
+              <input type="checkbox" id="incorrectOnly"> Show incorrect only
+            </label>
+          </div>
+          <h3>Review</h3>
+          <div id="reviewList" class="stack"></div>
+          <div class="notice notice--info" style="margin-top:var(--space-5)">
+            <svg viewBox="0 0 24 24" aria-hidden="true" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><path d="M12 8v.5M11 12h1v4h1"/></svg>
+            <div><p class="mb-0">This is practice, not an official exam. A practice score does not predict your
+              result in any official examination. Learn how to use your results in the
+              <a href="/guides/how-to-review-practice-quiz-results">quiz review guide</a>.</p></div>
+          </div>
+        </section>
+
+        <!-- Transparency notice -->
+        <div class="notice notice--info" style="margin-top:var(--space-6)">
+          <svg viewBox="0 0 24 24" aria-hidden="true" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><path d="M12 8v.5M11 12h1v4h1"/></svg>
+          <div><p class="mb-0">Questions are original practice items written for StudentKit. We are not affiliated
+            with JAMB, WAEC, NECO, or any examination body, and this is not a past-question archive.</p></div>
+        </div>
+
+        <div class="related">
+          <h2>Related</h2>
+          <ul>
+            <li><a href="/guides/how-to-review-practice-quiz-results">Guide: How to review practice quiz results</a></li>
+            <li><a href="/tools/study-planner">Study Planner</a></li>
+            <li><a href="/tools/cgpa-calculator">CGPA Calculator</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"><noscript><div class="container" style="padding-block:16px"><a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy-policy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/disclaimer">Disclaimer</a></div></noscript></footer>
+  <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/quiz-data.js" defer></script>
+  <script src="/assets/js/quiz.js" defer></script>
+</body>
+</html>

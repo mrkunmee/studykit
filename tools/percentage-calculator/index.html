@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Percentage Calculator — StudentKit Nigeria</title>
+  <meta name="description" content="Simple percentage calculator with three clear modes: percentage of a number, what percent one value is of another, and percentage increase or decrease.">
+  <meta name="theme-color" content="#0F6E5C">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="StudentKit Nigeria">
+  <meta property="og:title" content="Percentage Calculator — StudentKit Nigeria">
+  <meta property="og:description" content="Three clearly-labelled modes for the percentage maths students need most.">
+  <meta property="og:url" content="https://studykit.com.ng/tools/percentage-calculator">
+  <link rel="canonical" href="https://studykit.com.ng/tools/percentage-calculator">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/print.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header id="site-header"><noscript><div class="container" style="padding-block:12px"><a class="brand" href="/"><strong>StudentKit Nigeria</strong></a> · <a href="/tools">Tools</a> · <a href="/guides">Guides</a> · <a href="/about">About</a> · <a href="/contact">Contact</a></div></noscript></header>
+
+  <main id="main">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/tools">Tools</a> / <span aria-current="page">Percentage Calculator</span></nav>
+    </div>
+
+    <section class="section" style="padding-top:var(--space-4)">
+      <div class="container">
+        <div class="page-intro">
+          <h1>Percentage Calculator</h1>
+          <p class="lead">Three clearly-labelled modes for the percentage maths students need most. Pick a mode,
+            enter the values, and see the answer with the calculation shown.</p>
+        </div>
+
+        <noscript><div class="notice notice--warning" style="margin-top:var(--space-5)"><svg viewBox="0 0 24 24" aria-hidden="true" stroke-width="1.75"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg><div><h3>JavaScript is required</h3><p>This calculator runs in your browser and needs JavaScript enabled.</p></div></div></noscript>
+
+        <div class="card" style="margin-top:var(--space-6)">
+          <div class="field">
+            <span class="field-label" id="modeLabel">Calculation mode</span>
+            <div class="segmented" role="radiogroup" aria-labelledby="modeLabel" id="modeSwitch">
+              <button type="button" role="radio" aria-checked="true" class="is-active" data-mode="of">% of a number</button>
+              <button type="button" role="radio" aria-checked="false" data-mode="xy">X is what % of Y</button>
+              <button type="button" role="radio" aria-checked="false" data-mode="change">Increase / decrease</button>
+            </div>
+          </div>
+
+          <form id="pctForm" novalidate>
+            <!-- Mode: % of a number -->
+            <div data-group="of">
+              <div class="entry-row__grid" style="grid-template-columns:1fr 1fr">
+                <div class="field"><label for="ofPct">Percentage (%)</label><input type="number" id="ofPct" inputmode="decimal" step="any" aria-describedby="ofErr"></div>
+                <div class="field"><label for="ofNum">Of this number</label><input type="number" id="ofNum" inputmode="decimal" step="any" aria-describedby="ofErr"></div>
+              </div>
+              <p class="help">Example: 15% of 240 = 36.</p>
+            </div>
+
+            <!-- Mode: X is what % of Y -->
+            <div data-group="xy" hidden>
+              <div class="entry-row__grid" style="grid-template-columns:1fr 1fr">
+                <div class="field"><label for="xyPart">Value (X)</label><input type="number" id="xyPart" inputmode="decimal" step="any" aria-describedby="xyErr"></div>
+                <div class="field"><label for="xyWhole">Out of total (Y)</label><input type="number" id="xyWhole" inputmode="decimal" step="any" aria-describedby="xyErr"></div>
+              </div>
+              <p class="help">Example: 45 is 25% of 180.</p>
+            </div>
+
+            <!-- Mode: increase / decrease -->
+            <div data-group="change" hidden>
+              <div class="entry-row__grid" style="grid-template-columns:1fr 1fr">
+                <div class="field"><label for="chOld">Original value</label><input type="number" id="chOld" inputmode="decimal" step="any" aria-describedby="chErr"></div>
+                <div class="field"><label for="chNew">New value</label><input type="number" id="chNew" inputmode="decimal" step="any" aria-describedby="chErr"></div>
+              </div>
+              <p class="help">Example: from 50 to 65 is a 30% increase.</p>
+            </div>
+
+            <p class="field-error" id="ofErr"></p>
+            <p class="field-error" id="xyErr"></p>
+            <p class="field-error" id="chErr"></p>
+
+            <div class="btn-row" style="margin-top:var(--space-4)">
+              <button type="submit" class="btn btn--primary">Calculate</button>
+              <button type="button" class="btn btn--secondary" id="resetBtn">Reset</button>
+            </div>
+          </form>
+
+          <div id="liveRegion" class="visually-hidden" aria-live="polite"></div>
+          <div class="result-panel" id="result" hidden style="margin-top:var(--space-5)">
+            <p class="tile__label mb-0">Result</p>
+            <p class="tile__value num" id="resultValue" style="margin:var(--space-1) 0"></p>
+            <p id="resultSentence" class="mb-0"></p>
+          </div>
+        </div>
+
+        <div class="article" style="margin-top:var(--space-8)">
+          <h2>How each mode works</h2>
+          <h3>Percentage of a number</h3>
+          <p>Multiply the number by the percentage divided by 100. For example, 15% of 240 = (15 ÷ 100) × 240 = 36.</p>
+          <h3>What percentage one value is of another</h3>
+          <p>Divide the value by the total and multiply by 100. For example, 45 ÷ 180 × 100 = 25%.</p>
+          <h3>Percentage increase or decrease</h3>
+          <p>Subtract the original from the new value, divide by the original, and multiply by 100. For example,
+            from 50 to 65: (65 − 50) ÷ 50 × 100 = 30% increase. A negative result is a decrease.</p>
+        </div>
+
+        <div class="related">
+          <h2>Related</h2>
+          <ul>
+            <li><a href="/tools/cgpa-calculator">CGPA Calculator</a></li>
+            <li><a href="/tools/exam-score-planner">Exam Score Planner</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"><noscript><div class="container" style="padding-block:16px"><a href="/about">About</a> · <a href="/contact">Contact</a> · <a href="/privacy-policy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/disclaimer">Disclaimer</a></div></noscript></footer>
+  <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/percentage.js" defer></script>
+</body>
+</html>
