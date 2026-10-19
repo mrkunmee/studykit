@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- StudentKit Nigeria sitemap. Production domain: https://studykit.com.ng -->
+<!-- StudentKit Nigeria sitemap. Production domain: https://www.studykit.com.ng -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://studykit.com.ng/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://studykit.com.ng/tools</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://studykit.com.ng/guides</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://studykit.com.ng/tools/cgpa-calculator</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://studykit.com.ng/tools/study-planner</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://studykit.com.ng/tools/practice-quiz</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://studykit.com.ng/tools/exam-score-planner</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://studykit.com.ng/tools/percentage-calculator</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://studykit.com.ng/guides/how-cgpa-is-calculated</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://studykit.com.ng/guides/how-to-create-a-study-timetable</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://studykit.com.ng/guides/how-to-review-practice-quiz-results</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://studykit.com.ng/about</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://studykit.com.ng/contact</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://studykit.com.ng/privacy-policy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://studykit.com.ng/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://studykit.com.ng/disclaimer</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://www.studykit.com.ng/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.studykit.com.ng/tools</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.studykit.com.ng/guides</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.studykit.com.ng/tools/cgpa-calculator</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.studykit.com.ng/tools/study-planner</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.studykit.com.ng/tools/practice-quiz</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.studykit.com.ng/tools/exam-score-planner</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.studykit.com.ng/tools/percentage-calculator</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.studykit.com.ng/guides/how-cgpa-is-calculated</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.studykit.com.ng/guides/how-to-create-a-study-timetable</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.studykit.com.ng/guides/how-to-review-practice-quiz-results</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.studykit.com.ng/about</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.studykit.com.ng/contact</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.studykit.com.ng/privacy-policy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://www.studykit.com.ng/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://www.studykit.com.ng/disclaimer</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>

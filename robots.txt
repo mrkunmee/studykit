@@ -4,4 +4,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://studykit.com.ng/sitemap.xml
+Sitemap: https://www.studykit.com.ng/sitemap.xml
