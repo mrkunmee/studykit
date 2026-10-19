@@ -3,11 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Google Analytics (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HKMPHM5V39"></script>
+  <!-- Consent Mode v2 defaults (set before GA/AdSense use storage) -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied', ad_user_data: 'denied',
+      ad_personalization: 'denied', analytics_storage: 'denied',
+      wait_for_update: 500
+    });
+    try {
+      if (localStorage.getItem('sk_consent') === 'granted') {
+        gtag('consent', 'update', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted' });
+      }
+    } catch (e) {}
+  </script>
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HKMPHM5V39"></script>
+  <script>
     gtag('js', new Date());
     gtag('config', 'G-HKMPHM5V39');
   </script>
@@ -100,6 +113,9 @@
             produce these statistics. We use it to improve the site, not to identify you personally.</p>
           <p>You can control or block cookies in your browser settings, and you can opt out of Google Analytics across
             websites with Google's <a href="https://tools.google.com/dlpage/gaoptout" rel="nofollow noopener" target="_blank">opt-out browser add-on</a>.</p>
+          <p>When you first visit, a consent banner lets you accept these cookies or continue with only essential ones.
+            Until you accept, analytics and advertising cookies are set to "denied" (Google Consent Mode). You can
+            change your choice at any time using "Cookie settings" in the site footer.</p>
 
           <h2 id="ads">Advertising</h2>
           <p>StudentKit uses <strong>Google AdSense</strong> to display advertising. Third-party vendors, including

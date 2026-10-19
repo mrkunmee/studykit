@@ -148,9 +148,15 @@
         "</div>" +
         '<div class="footer-bottom">' +
           "<p>Educational tools. Results are estimates — always verify with your institution. StudentKit Nigeria is not affiliated with JAMB, WAEC, NECO, or any university.</p>" +
-          "<p>&copy; " + year + " StudentKit Nigeria.</p>" +
+          "<p>&copy; " + year + " StudentKit Nigeria. " +
+            '<a href="#" class="js-cookie-settings">Cookie settings</a></p>' +
         "</div>" +
       "</div>";
+    var cs = footer.querySelector(".js-cookie-settings");
+    if (cs) cs.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (window.SK && typeof SK.openConsent === "function") SK.openConsent();
+    });
   }
 
   /* ---------- Shared helpers for tool scripts ---------- */
@@ -223,7 +229,54 @@
     } catch (e) { /* non-critical */ }
   }
 
-  function init() { buildHeader(); buildFooter(); setCanonical(); }
+  /* ---------- Cookie consent banner (drives Google Consent Mode v2) ---------- */
+  function applyConsent(granted) {
+    try {
+      if (typeof gtag === "function") {
+        gtag("consent", "update", granted
+          ? { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted", analytics_storage: "granted" }
+          : { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "denied" });
+      }
+    } catch (e) { /* non-critical */ }
+  }
+
+  function buildConsent() {
+    if (document.getElementById("consentBanner")) return;
+    var el = document.createElement("div");
+    el.className = "consent";
+    el.id = "consentBanner";
+    el.setAttribute("role", "region");
+    el.setAttribute("aria-label", "Cookie consent");
+    el.innerHTML =
+      '<div class="consent__inner">' +
+        '<p class="consent__text">We use cookies for Google Analytics and Google AdSense to measure traffic and show ads. ' +
+          'Accept them, or continue with only essential cookies. See our <a href="/privacy-policy">Privacy Policy</a>.</p>' +
+        '<div class="consent__actions">' +
+          '<button type="button" class="btn btn--secondary btn--sm" id="consentReject">Only essential</button>' +
+          '<button type="button" class="btn btn--primary btn--sm" id="consentAccept">Accept all</button>' +
+        "</div>" +
+      "</div>";
+    document.body.appendChild(el);
+
+    function choose(granted) {
+      try { localStorage.setItem("sk_consent", granted ? "granted" : "denied"); } catch (e) {}
+      applyConsent(granted);
+      el.hidden = true;
+    }
+    document.getElementById("consentAccept").addEventListener("click", function () { choose(true); });
+    document.getElementById("consentReject").addEventListener("click", function () { choose(false); });
+
+    var stored = null;
+    try { stored = localStorage.getItem("sk_consent"); } catch (e) {}
+    el.hidden = (stored === "granted" || stored === "denied");
+  }
+
+  window.SK.openConsent = function () {
+    var el = document.getElementById("consentBanner");
+    if (el) { el.hidden = false; }
+  };
+
+  function init() { buildHeader(); buildFooter(); setCanonical(); buildConsent(); }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else { init(); }
